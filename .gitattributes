@@ -34,3 +34,4 @@
 # Файлы, которые не должны изменяться
 package-lock.json text eol=lf
 
+
