@@ -34,9 +34,9 @@ jobs:
 
       - name: Build
         run: npm run build
-        env:
-          # Если используете переменные окружения, добавьте их здесь
-          # NEXT_PUBLIC_BASE_PATH: /kazan-map
+        # Если нужно настроить basePath, раскомментируйте и измените:
+        # env:
+        #   NEXT_PUBLIC_BASE_PATH: /kazan-map
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
