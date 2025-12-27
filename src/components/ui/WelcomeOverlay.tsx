@@ -101,12 +101,12 @@ export default function WelcomeOverlay() {
           </button>
 
           <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-            <Star className="text-mario-yellow" size={20} className="md:w-6 md:h-6" />
+            <Star className="text-mario-yellow w-5 h-5 md:w-6 md:h-6" />
             <span className="font-pixel text-[10px] md:text-xs">{currentStep.title}</span>
           </div>
 
           <div className="w-12 h-12 md:w-14 md:h-14 mario-question flex items-center justify-center mb-3 md:mb-4">
-            <currentStep.icon size={24} className="md:w-7 md:h-7 text-mario-brown" />
+            <currentStep.icon className="w-6 h-6 md:w-7 md:h-7 text-mario-brown" />
           </div>
 
           <h2 className="font-pixel text-xs md:text-sm mb-2">{currentStep.subtitle}</h2>
@@ -137,9 +137,9 @@ export default function WelcomeOverlay() {
               onClick={handleStartExploring}
               className="w-full mario-btn py-3 px-4 md:py-4 md:px-6 flex items-center justify-center gap-2 md:gap-3"
             >
-              <Compass size={20} className="md:w-6 md:h-6" />
+              <Compass className="w-5 h-5 md:w-6 md:h-6" />
               <span className="font-pixel text-[10px] md:text-xs">START GAME!</span>
-              <Star size={18} className="md:w-5 md:h-5 text-mario-yellow animate-pulse" />
+              <Star className="w-4 h-4 md:w-5 md:h-5 text-mario-yellow animate-pulse" />
             </button>
           ) : (
             <button
@@ -147,7 +147,7 @@ export default function WelcomeOverlay() {
               className="w-full mario-btn py-3 px-4 md:py-4 md:px-6 flex items-center justify-center gap-2"
             >
               <span className="font-pixel text-[10px] md:text-xs">NEXT</span>
-              <ChevronRight size={18} className="md:w-5 md:h-5" />
+              <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
             </button>
           )}
 
