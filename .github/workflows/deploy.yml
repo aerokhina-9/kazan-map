@@ -38,6 +38,15 @@ jobs:
         # env:
         #   NEXT_PUBLIC_BASE_PATH: /kazan-map
 
+      - name: Ensure .nojekyll exists
+        run: |
+          if [ ! -f out/.nojekyll ]; then
+            touch out/.nojekyll
+            echo "Created .nojekyll file"
+          else
+            echo ".nojekyll already exists"
+          fi
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 

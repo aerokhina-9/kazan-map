@@ -1,0 +1,36 @@
+# Установить поведение по умолчанию для всех файлов
+* text=auto
+
+# Явно указать текстовые файлы, которые должны быть нормализованы и преобразованы в LF при коммите
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.jsx text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.txt text eol=lf
+
+# Указать файлы, которые должны всегда иметь CRLF окончания строк
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Бинарные файлы
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+
+# Файлы, которые не должны изменяться
+package-lock.json text eol=lf
+
