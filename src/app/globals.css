@@ -1,26 +1,416 @@
 @import "tailwindcss";
 
+@theme {
+  /* Mario Colors */
+  --color-mario-red: #e52521;
+  --color-mario-blue: #049cd8;
+  --color-mario-yellow: #fbd000;
+  --color-mario-green: #43b047;
+  --color-mario-brown: #8b4513;
+  --color-mario-brick: #c84c0c;
+  --color-mario-sky: #5c94fc;
+  --color-mario-ground: #c4a666;
+  --color-mario-black: #1a1a1a;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --background: #5c94fc;
+  --foreground: #ffffff;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Mario Colors */
+  --mario-red: #e52521;
+  --mario-blue: #049cd8;
+  --mario-yellow: #fbd000;
+  --mario-green: #43b047;
+  --mario-brown: #8b4513;
+  --mario-brick: #c84c0c;
+  --mario-sky: #5c94fc;
+  --mario-ground: #c4a666;
+  --mario-black: #1a1a1a;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Pixel font */
+  --font-pixel: 'Press Start 2P', cursive;
 }
 
 body {
-  background: var(--background);
+  background: var(--mario-sky);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* Pixel font utility class */
+.font-pixel {
+  font-family: var(--font-pixel), monospace;
+}
+
+/* Mario-style brick pattern */
+.mario-brick {
+  background-color: var(--mario-brick);
+  background-image:
+    linear-gradient(to right, #8b2500 1px, transparent 1px),
+    linear-gradient(to bottom, #8b2500 1px, transparent 1px),
+    linear-gradient(to right, #ff6b35 0%, var(--mario-brick) 50%, #8b2500 100%);
+  background-size: 32px 16px, 32px 16px, 100% 100%;
+  background-position: 0 0, 16px 8px;
+  border: 4px solid #8b2500;
+  box-shadow:
+    inset 2px 2px 0 #ff8c5a,
+    inset -2px -2px 0 #6b1a00,
+    4px 4px 0 rgba(0,0,0,0.3);
+}
+
+/* Mario-style question block */
+.mario-question {
+  background: linear-gradient(180deg, #fbd000 0%, #e8a000 100%);
+  border: 4px solid #8b6914;
+  box-shadow:
+    inset 3px 3px 0 #ffe066,
+    inset -3px -3px 0 #c78f00,
+    4px 4px 0 rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.mario-question::after {
+  content: '?';
+  font-family: var(--font-pixel);
+  font-size: 1.5rem;
+  color: #8b4513;
+}
+
+/* Mario-style button */
+.mario-btn {
+  background: linear-gradient(180deg, #43b047 0%, #2d8a30 100%);
+  border: 4px solid #1a5c1c;
+  box-shadow:
+    inset 2px 2px 0 #6ed472,
+    inset -2px -2px 0 #1a5c1c,
+    4px 4px 0 rgba(0,0,0,0.4);
+  color: white;
+  font-family: var(--font-pixel);
+  transition: transform 0.1s, box-shadow 0.1s;
+  image-rendering: pixelated;
+}
+
+.mario-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 2px 2px 0 #6ed472,
+    inset -2px -2px 0 #1a5c1c,
+    4px 6px 0 rgba(0,0,0,0.4);
+}
+
+.mario-btn:active {
+  transform: translateY(2px);
+  box-shadow:
+    inset 2px 2px 0 #6ed472,
+    inset -2px -2px 0 #1a5c1c,
+    2px 2px 0 rgba(0,0,0,0.4);
+}
+
+.mario-btn-red {
+  background: linear-gradient(180deg, #e52521 0%, #b81d1a 100%);
+  border-color: #7a1210;
+  box-shadow:
+    inset 2px 2px 0 #ff5a57,
+    inset -2px -2px 0 #7a1210,
+    4px 4px 0 rgba(0,0,0,0.4);
+}
+
+.mario-btn-yellow {
+  background: linear-gradient(180deg, #fbd000 0%, #c8a600 100%);
+  border-color: #8b7400;
+  color: #5c3000;
+  box-shadow:
+    inset 2px 2px 0 #ffe84d,
+    inset -2px -2px 0 #8b7400,
+    4px 4px 0 rgba(0,0,0,0.4);
+}
+
+/* Mario-style panel */
+.mario-panel {
+  background: #e8e8e8;
+  border: 4px solid #1a1a1a;
+  box-shadow:
+    inset 4px 4px 0 #ffffff,
+    inset -4px -4px 0 #a8a8a8,
+    6px 6px 0 rgba(0,0,0,0.3);
+}
+
+/* Coin animation */
+@keyframes coin-spin {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(0.2); }
+}
+
+.mario-coin {
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(circle at 30% 30%, #ffe066 0%, #fbd000 50%, #c8a600 100%);
+  border: 3px solid #8b6914;
+  border-radius: 50%;
+  animation: coin-spin 1s ease-in-out infinite;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+}
+
+/* 8-bit pixelated borders */
+.pixel-border {
+  border-style: solid;
+  border-width: 4px;
+  border-image:
+    linear-gradient(
+      135deg,
+      #ffffff 25%,
+      #a8a8a8 25%,
+      #a8a8a8 50%,
+      #1a1a1a 50%,
+      #1a1a1a 75%,
+      #a8a8a8 75%
+    ) 1;
+}
+
+/* Ground pattern */
+.mario-ground {
+  background-color: var(--mario-ground);
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      #a88b4a 0px,
+      #a88b4a 2px,
+      transparent 2px,
+      transparent 8px
+    );
+  border-top: 4px solid #8b7355;
+}
+
+/* Pipe decoration */
+.mario-pipe {
+  background: linear-gradient(90deg, #1a5c1c 0%, #43b047 30%, #6ed472 50%, #43b047 70%, #1a5c1c 100%);
+  border: 4px solid #0d3d0f;
+  border-radius: 8px 8px 0 0;
+}
+
+/* Leaflet styles overrides */
+.leaflet-container {
+  font-family: inherit;
+  touch-action: pan-x pan-y;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .leaflet-container {
+    font-size: 14px;
+  }
+  
+  .leaflet-popup-content {
+    font-size: 14px;
+  }
+  
+  .leaflet-control-zoom {
+    margin: 10px !important;
+  }
+  
+  .leaflet-control-zoom a {
+    width: 30px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+    font-size: 18px !important;
+  }
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 0 !important;
+  border: 4px solid #1a1a1a !important;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.3) !important;
+  background: #e8e8e8 !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+}
+
+.leaflet-popup-close-button {
+  color: #1a1a1a !important;
+  font-size: 24px !important;
+  padding: 8px !important;
+  font-family: var(--font-pixel) !important;
+}
+
+.leaflet-popup-tip {
+  background: #e8e8e8 !important;
+  border: 4px solid #1a1a1a !important;
+  box-shadow: none !important;
+}
+
+/* Custom marker styles */
+.custom-marker,
+.pending-marker,
+.mario-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.marker-icon:hover {
+  transform: scale(1.2);
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes mario-bounce {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.05);
+  }
+}
+
+@keyframes shadow-pulse {
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateX(-50%) scale(0.8);
+    opacity: 0.15;
+  }
+}
+
+@keyframes pop-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes fog-appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+@keyframes block-hit {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-pop-in {
+  animation: pop-in 0.5s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.4s ease-out;
+}
+
+.animate-block-hit {
+  animation: block-hit 0.2s ease-out;
+}
+
+.fog-layer {
+  transition: fill-opacity 0.7s ease-out;
+}
+
+/* Prose styles for content pages */
+.prose h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-pixel);
+  font-size: 1rem;
+  color: var(--mario-brick);
+}
+
+.prose h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose p {
+  margin-bottom: 1rem;
+}
+
+.prose ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+/* Scrollbar styles - Mario themed */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #43b047 0%, #2d8a30 100%);
+  border: 2px solid #1a5c1c;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #6ed472 0%, #43b047 100%);
+}
+
+/* Cloud decoration */
+.mario-cloud {
+  background: white;
+  border-radius: 50%;
+  box-shadow:
+    30px 0 0 white,
+    15px -15px 0 white,
+    45px -15px 0 white;
 }

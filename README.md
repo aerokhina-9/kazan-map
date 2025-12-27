@@ -1,36 +1,233 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Анти-туристическая карта Казани
 
-## Getting Started
+Геймифицированный инструмент пространственного исследования города вне туристического ареала.
 
-First, run the development server:
+## О проекте
+
+«Анти-туристическая карта Казани» — это проект цифровой урбанистики. Он не показывает "что посмотреть", а позволяет коллективно исследовать город, добавляя находки без спойлеров.
+
+### Основные возможности
+
+- **Туристическое ядро** — автоматически вычисляется по плотности достопримечательностей
+- **Зона исследования** — территория вне туристического ареала, покрытая туманом
+- **Коллективное исследование** — добавление находок без названий и адресов
+- **Слой "Где ест город"** — локальная кухня: столовые, чайханы, места после смены
+- **Система миссий** — геймификация без рейтингов и соревнований
+- **Мультиязычность** — русский, татарский, чувашский
+
+## Запуск
 
 ```bash
+# Установка зависимостей
+npm install
+
+# Запуск в режиме разработки
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Сборка для продакшена
+npm run build
+
+# Запуск продакшен-версии
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Открыть [http://localhost:3000](http://localhost:3000) в браузере.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Деплой на GitHub Pages
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Проект настроен для автоматического деплоя на GitHub Pages через GitHub Actions.
 
-## Learn More
+### Быстрый старт
 
-To learn more about Next.js, take a look at the following resources:
+1. **Создайте репозиторий на GitHub**
+   - Название репозитория может быть любым (например, `kazan-map`)
+   - Или используйте формат `username.github.io` для размещения в корне домена
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Настройте GitHub Pages**
+   - Перейдите в Settings → Pages
+   - В разделе "Source" выберите "GitHub Actions"
+   - Сохраните изменения
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Загрузите код в репозиторий**
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git branch -M main
+   git remote add origin https://github.com/username/kazan-map.git
+   git push -u origin main
+   ```
 
-## Deploy on Vercel
+4. **Автоматический деплой**
+   - После push в ветку `main` или `master` автоматически запустится workflow
+   - Сайт будет доступен по адресу:
+     - Если репозиторий `username.github.io`: `https://username.github.io`
+     - Если другой репозиторий: `https://username.github.io/kazan-map`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Настройка basePath (если репозиторий не в корне)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Если ваш репозиторий называется не `username.github.io`, нужно настроить basePath:
+
+1. Откройте `next.config.ts`
+2. Раскомментируйте строки с basePath:
+   ```typescript
+   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '/kazan-map';
+   
+   const nextConfig: NextConfig = {
+     basePath: basePath,
+     // ...
+   };
+   ```
+3. Замените `/kazan-map` на имя вашего репозитория
+4. В файле `.github/workflows/deploy.yml` раскомментируйте строку:
+   ```yaml
+   NEXT_PUBLIC_BASE_PATH: /kazan-map
+   ```
+
+### Ручной деплой
+
+Если нужно задеплоить вручную:
+
+```bash
+# Сборка проекта
+npm run build
+
+# Файлы будут в папке out/
+# Загрузите содержимое папки out/ в ветку gh-pages или используйте GitHub Actions
+```
+
+### Проверка деплоя
+
+После успешного деплоя:
+- Проверьте статус в разделе Actions репозитория
+- Сайт будет доступен через несколько минут после завершения workflow
+
+## Технологии
+
+- **Next.js 14** (App Router)
+- **TypeScript**
+- **TailwindCSS**
+- **react-leaflet + leaflet**
+- **lucide-react**
+- **OpenStreetMap** tiles
+
+## Архитектура
+
+```
+src/
+├── app/                    # Страницы (Next.js App Router)
+│   ├── page.tsx           # Landing
+│   ├── map/page.tsx       # Интерактивная карта
+│   ├── how-it-works/      # Как это работает
+│   ├── ethics/            # Этика проекта
+│   └── about/             # О проекте
+├── components/
+│   ├── map/               # Компоненты карты
+│   │   └── MapContainer.tsx
+│   ├── ui/                # UI компоненты
+│   │   ├── Sidebar.tsx
+│   │   ├── AddFindingPanel.tsx
+│   │   └── MapControls.tsx
+│   └── layout/            # Лейаут
+│       ├── Header.tsx
+│       └── Footer.tsx
+├── lib/
+│   ├── categories.ts      # Категории находок
+│   ├── context.tsx        # React Context
+│   ├── density.ts         # Расчёт плотности
+│   ├── findings.ts        # Находки + LocalStorage
+│   ├── i18n.ts           # Локализация
+│   └── missions.ts        # Миссии
+└── data/
+    └── attractions.ts     # Достопримечательности Казани
+```
+
+## Логика туристического ядра
+
+1. **Bounding box** — границы Казани
+2. **Сетка 40×40** — делит город на ячейки
+3. **Плотность** — количество достопримечательностей в радиусе ~1.5км от центра ячейки
+4. **Нормализация** — значения 0...1
+5. **Порог** — ячейки с плотностью > 30% считаются туристическим ядром
+
+## Туман и вырезы
+
+- Зона исследования покрыта полупрозрачным тёмным туманом
+- Каждая находка создаёт "вырез" (hole) в тумане
+- Радиус выреза: 250-400м (зависит от trust)
+- Анимация появления тумана и раскрытия вырезов
+
+## Миссии
+
+| Миссия | Условие |
+|--------|---------|
+| Выйти из пузыря | 1 находка вне туристического ядра |
+| Где ест город | 1 Food или Drink находка |
+| После смены | AfterWork место вечером |
+| Тихая Казань | Calm место |
+| Пограничье | Border находка |
+| Три шага | 3 зоны тумана раскрыты |
+
+## Share + Embed
+
+### URL параметры
+
+```
+/map?lang=tt&mode=explorer&showFood=1&categories=Calm,Green
+```
+
+- `lang` — язык (ru, chv, tt)
+- `mode` — режим (visitor, explorer)
+- `showFood` — показывать еду (0, 1)
+- `categories` — выбранные категории
+- `embed` — режим встраивания (1)
+
+### Embed код
+
+```html
+<iframe
+  src="https://example.com/map?embed=1"
+  width="100%"
+  height="500"
+  frameborder="0"
+  style="border-radius: 12px;">
+</iframe>
+```
+
+## Категории
+
+### Общие (Place)
+
+- **Calm** — тихое место
+- **Weird** — странное
+- **Solo** — для одиночества
+- **Lively** — живое
+- **Green** — зелёное
+- **Tense** — напряжённое
+- **Border** — пограничное
+
+### Локальная кухня (Food/Drink)
+
+- **EverydayFood** — повседневная еда
+- **LocalStaple** — местная база
+- **DrinkingPlace** — выпивка без концепта
+- **TeaPlace** — чай / безалкогольное
+- **TimeCapsule** — из другого времени
+- **AfterWork** — после смены
+- **Intergenerational** — разные поколения
+
+## Ограничения MVP
+
+- Все данные хранятся в LocalStorage (без бэкенда)
+- Нет авторизации пользователей
+- Нет синхронизации между устройствами
+- Моковые находки для демонстрации
+- Без платных API
+
+## Лицензия
+
+MIT
+
+---
+
+Проект цифровой урбанистики, 2025
