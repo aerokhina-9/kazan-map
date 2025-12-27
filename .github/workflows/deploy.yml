@@ -35,8 +35,8 @@ jobs:
       - name: Build
         run: npm run build
         # Если нужно настроить basePath, раскомментируйте и измените:
-        # env:
-        #   NEXT_PUBLIC_BASE_PATH: /kazan-map
+        env:
+        NEXT_PUBLIC_BASE_PATH: /kazan-map
 
       - name: Ensure .nojekyll exists
         run: |
