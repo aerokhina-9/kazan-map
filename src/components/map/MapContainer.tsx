@@ -373,7 +373,7 @@ function UserLocationMarker() {
         "></div>
         <!-- Марио -->
         <img
-          src="/mario"
+          src="mario"
         />
         <!-- Индикатор -->
         <div style="
