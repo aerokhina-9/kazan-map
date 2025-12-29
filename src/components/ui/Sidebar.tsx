@@ -67,11 +67,15 @@ export default function Sidebar() {
 
       {/* Sidebar - Mario panel style */}
       <div
-        className={`absolute top-0 left-0 h-full z-[1000] transition-all duration-300 ${
-          isOpen ? 'w-full md:w-80' : 'w-0'
-        } overflow-hidden`}
+        className={`
+          fixed top-0 left-0 h-full z-[1000]
+          w-80
+          transform transition-transform duration-300
+          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+          md:translate-x-0
+        `}
       >
-        <div className="w-full md:w-80 h-full flex flex-col mario-panel">
+        <div className="w-full h-full flex flex-col mario-panel">
           {/* Header - Mario brick style */}
           <div className="mario-brick p-4 text-white">
             <div className="flex items-center justify-between">
