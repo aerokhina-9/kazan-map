@@ -378,8 +378,6 @@ function UserLocationMarker() {
             width: 64px;
             height: 64px;
             object-fit: contain;
-            animation: mario-bounce 0.6s ease infinite;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
           "
         />
         <!-- Индикатор -->
