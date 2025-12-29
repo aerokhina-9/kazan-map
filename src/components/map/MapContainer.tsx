@@ -351,6 +351,8 @@ function UserLocationMarker() {
   // Всегда используем демо-позицию (пользователь в Израиле, геолокация бесполезна)
   const currentPosition = demoPosition;
 
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
   const marioIcon = L.divIcon({
     className: 'mario-marker',
     html: `
@@ -373,7 +375,7 @@ function UserLocationMarker() {
         "></div>
         <!-- Марио -->
         <img
-          src="mario.png"
+          src="${basePath}/mario.png"
         />
         <!-- Индикатор -->
         <div style="
