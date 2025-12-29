@@ -373,7 +373,7 @@ function UserLocationMarker() {
         "></div>
         <!-- Марио -->
         <img
-          src="/mario.png"
+          src="/mario"
           style="
             width: 64px;
             height: 64px;
